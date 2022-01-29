@@ -13,7 +13,7 @@ npm i logseq-dateutils
 Import (you may also import only selective functions for your needs):
 
 ```
-import { getDateForPage, getDayInText, getScheduledDeadlineDate } from 'logseq-dateutils';
+import { getDateForPage, getDayInText, getScheduledDeadlineDateDay, getScheduledDeadlineDateDayTime } from 'logseq-dateutils';
 ```
 
 # Usage
