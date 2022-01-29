@@ -55,7 +55,7 @@ await logseq.Editor.updateBlock(uuid, `A quick brown fox
 SCHEDULED: <getScheduledDeadlineFormat(today)>`)
 ```
 
-## getScheduledDeadlineDateDay
+## getScheduledDeadlineDateDayTime
 
 Returns the date format that is needed (including the time) if your plugin requires creation of `SCHEDULED` or `DEADLINE` items.
 
