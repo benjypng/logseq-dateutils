@@ -34,7 +34,7 @@ const todayDateInUserFormat = getDateForPage(today, preferredDateFormat);
 console.log(todayDateInUserFormat);
 ```
 
-## getDayInText and getScheduledDeadlineDate
+## getDayInText
 
 Returns the day, based on the specified date.
 
@@ -44,20 +44,26 @@ const today = new Date();
 const todayDay = getDayInText(today);
 ```
 
-## getScheduledDeadlineDate
+## getScheduledDeadlineDateDay
 
-Returns the date format that is needed if your plugin requires creation of `SCHEDULED` or `DEADLINE` items.
+Returns the date format that is needed (without the time) if your plugin requires creation of `SCHEDULED` or `DEADLINE` items.
 
 ```
 const today = new Date();
 
-// To get scheduled format
 await logseq.Editor.updateBlock(uuid, `A quick brown fox
-getScheduledDeadlineFormat(today, "scheduled")`)
+SCHEDULED: <getScheduledDeadlineFormat(today)>`)
+```
 
-// To get deadline format
+## getScheduledDeadlineDateDay
+
+Returns the date format that is needed (including the time) if your plugin requires creation of `SCHEDULED` or `DEADLINE` items.
+
+```
+const today = new Date();
+
 await logseq.Editor.updateBlock(uuid, `A quick brown fox
-getScheduledDeadlineFormat(today, "deadline")`)
+DEADLINE: <getScheduledDeadlineDateDayTime(today)>`)
 ```
 
 # Getting Help
