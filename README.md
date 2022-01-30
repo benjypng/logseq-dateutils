@@ -18,7 +18,7 @@ import { getDateForPage, getDateForPageWithoutBrackets, getDayInText, getSchedul
 
 # Usage
 
-Below is an elaboration of the functions available:
+Below is an elaboration of the methods available:
 
 ## getDateForPage or getDateForPageWithoutBrackets
 
