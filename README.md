@@ -1,3 +1,5 @@
+[:heart: Sponsor this project on Github](https://github.com/sponsors/hkgnp)
+
 # Overview
 
 Provides some date utilities for developing Logseq plugins, in particular to cater to handling multiple user-defined date formats.
