@@ -17,7 +17,7 @@
   },
   "scripts": {
     "dev": "microbundle watch",
-    "build": "microbundle"
+    "build": "rm -R dist && microbundle"
   },
   "source": "src/index.ts",
   "main": "dist/index.umd.js",
