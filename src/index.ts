@@ -182,7 +182,7 @@ export const getScheduledDeadlineDateDayTime = (d: Date) => {
   )} ${d.toTimeString().substring(0, 5)}`;
 };
 
-export const getTimeInYYMMDDTHHMMFormat = (d: Date) => {
+export const getYYMMDDTHHMMFormat = (d: Date) => {
   const getYear = d.getFullYear();
   const getMonthNumber = d.getMonth() + 1;
   const getDate = d.getDate();
