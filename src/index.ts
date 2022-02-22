@@ -183,11 +183,17 @@ export const getScheduledDeadlineDateDayTime = (d: Date) => {
 };
 
 export const getYYMMDDTHHMMFormat = (d: Date) => {
-  const getYear = d.getFullYear();
-  const getMonthNumber = d.getMonth() + 1;
-  const getDate = d.getDate();
+  return `${[
+    d.getFullYear(),
+    ('0' + (d.getMonth() + 1)).slice(-2),
+    ('0' + d.getDate()).slice(-2),
+  ].join('-')}T${d.toTimeString().substring(0, 5)}`;
+};
 
-  return `${getYear}-${getMonthNumber}-${getDate}T${d
-    .toTimeString()
-    .substring(0, 5)}`;
+export const getYYYMMDD = (d: Date) => {
+  return [
+    d.getFullYear(),
+    ('0' + (d.getMonth() + 1)).slice(-2),
+    ('0' + d.getDate()).slice(-2),
+  ].join('');
 };
