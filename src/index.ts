@@ -167,6 +167,8 @@ export const getDateForPageWithoutBrackets = (
     return `${d.toLocaleString("default", {
       month: "long",
     })} ${getOrdinalNum(getDate)}, ${getYear}`;
+  } else if (preferredDateFormat === "do MMM yyyy") {
+    return `${getOrdinalNum(getDate)} ${getMonth} ${getYear}`;
   } else {
     return `${getMonth} ${getOrdinalNum(getDate)}, ${getYear}`;
   }
