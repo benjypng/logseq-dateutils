@@ -18,7 +18,8 @@ export const getDateForPage = (d: Date, preferredDateFormat: string) => {
     return `[[${getMonth} ${getOrdinalNum(getDate)}, ${getYear}]]`;
   } else if (
     preferredDateFormat.includes("yyyy") &&
-    preferredDateFormat.includes("MM") &&
+    (preferredDateFormat.includes("MM") ||
+      preferredDateFormat.includes("MMM")) &&
     preferredDateFormat.includes("dd") &&
     (preferredDateFormat.includes("EEEE") ||
       preferredDateFormat.includes("EEE") ||
@@ -39,6 +40,7 @@ export const getDateForPage = (d: Date, preferredDateFormat: string) => {
       yyyy: getYear,
       dd: ("0" + getDate).slice(-2),
       MM: ("0" + getMonthNumber).slice(-2),
+      MMMM: getMonthInFull,
       EEEE: weekdays[d.getDay()],
       EEE: weekdays[d.getDay()].substring(0, 3),
       E: weekdays[d.getDay()].substring(0, 1),
