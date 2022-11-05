@@ -54,16 +54,17 @@ export const getDateForPage = (d: Date, preferredDateFormat: string) => {
 
     return `[[${dateStr}]]`;
   } else if (
-    preferredDateFormat === "do MMMM yyyy" ||
+    preferredDateFormat === "do MMM yyyy" ||
     preferredDateFormat === "MMMM do, yyyy"
   ) {
     const mapObj = {
       yyyy: getYear,
       do: getOrdinalNum(getDate),
       MMMM: getMonthInFull,
+      MMM: getMonthInFull,
     };
     let dateStr = preferredDateFormat;
-    dateStr = dateStr.replace(/yyyy|do|MMMM/gi, function (matched) {
+    dateStr = dateStr.replace(/yyyy|do|MMM|MMMM/gi, function (matched) {
       return mapObj[matched];
     });
     return `[[${dateStr}]]`;
