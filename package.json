@@ -1,6 +1,6 @@
 {
   "name": "logseq-dateutils",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "repository": {
     "type": "git",
     "url": "https://github.com/hkgnp/logseq-dateutils.git"
@@ -13,7 +13,7 @@
     "utilities"
   ],
   "devDependencies": {
-    "microbundle": "^0.14.2"
+    "microbundle": "^0.15.1"
   },
   "scripts": {
     "dev": "microbundle watch",
