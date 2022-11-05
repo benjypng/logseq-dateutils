@@ -17,6 +17,21 @@ export const getDateForPage = (d: Date, preferredDateFormat: string) => {
   if (preferredDateFormat === "MMM do yyyy") {
     return `[[${getMonth} ${getOrdinalNum(getDate)}, ${getYear}]]`;
   } else if (
+    preferredDateFormat === "do MMM yyyy" ||
+    preferredDateFormat === "MMMM do, yyyy"
+  ) {
+    const mapObj = {
+      yyyy: getYear,
+      do: getOrdinalNum(getDate),
+      MMMM: getMonthInFull,
+      MMM: getMonthInFull.slice(0, 3),
+    };
+    let dateStr = preferredDateFormat;
+    dateStr = dateStr.replace(/yyyy|do|MMMM|MMM/gi, function (matched) {
+      return mapObj[matched];
+    });
+    return `[[${dateStr}]]`;
+  } else if (
     preferredDateFormat.includes("yyyy") &&
     (preferredDateFormat.includes("MM") ||
       preferredDateFormat.includes("MMM")) &&
@@ -52,21 +67,6 @@ export const getDateForPage = (d: Date, preferredDateFormat: string) => {
       return mapObj[matched];
     });
 
-    return `[[${dateStr}]]`;
-  } else if (
-    preferredDateFormat === "do MMM yyyy" ||
-    preferredDateFormat === "MMMM do, yyyy"
-  ) {
-    const mapObj = {
-      yyyy: getYear,
-      do: getOrdinalNum(getDate),
-      MMMM: getMonthInFull,
-      MMM: getMonthInFull.slice(0, 3),
-    };
-    let dateStr = preferredDateFormat;
-    dateStr = dateStr.replace(/yyyy|do|MMM|MMMM/gi, function (matched) {
-      return mapObj[matched];
-    });
     return `[[${dateStr}]]`;
   } else if (
     preferredDateFormat.includes("yyyy") &&
