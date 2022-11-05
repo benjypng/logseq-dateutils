@@ -61,7 +61,7 @@ export const getDateForPage = (d: Date, preferredDateFormat: string) => {
       yyyy: getYear,
       do: getOrdinalNum(getDate),
       MMMM: getMonthInFull,
-      MMM: getMonthInFull.slice(0, 4),
+      MMM: getMonthInFull.slice(0, 3),
     };
     let dateStr = preferredDateFormat;
     dateStr = dateStr.replace(/yyyy|do|MMM|MMMM/gi, function (matched) {
