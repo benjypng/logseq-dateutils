@@ -126,7 +126,7 @@ export const getDateForPageWithoutBrackets = (
       MM: ("0" + getMonthNumber).slice(-2),
       EEEE: weekdays[d.getDay()],
       EEE: weekdays[d.getDay()].substring(0, 3),
-      E: weekdays[d.getDay()].substring(0, 1),
+      E: weekdays[d.getDay()].substring(0, 3),//same E, EE, or EEE https://unicode-org.github.io/icu/userguide/format_parse/datetime/#formatting-dates:~:text=day%20of%20week-,E%2C%20EE%2C%20or%20EEE,-EEEE%0AEEEEE%0AEEEEEE
     };
 
     let dateStr = preferredDateFormat;
