@@ -83,7 +83,6 @@
     "@tsconfig/recommended": "^1.0.3",
     "@types/jest": "^29.5.5",
     "@types/node": "^20.8.2",
-    "dts": "^0.1.1",
     "dts-cli": "^2.0.3",
     "husky": "^8.0.3",
     "size-limit": "^9.0.0",
@@ -91,6 +90,7 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "date-fns": "^2.30.0"
+    "date-fns": "^2.30.0",
+    "dts": "^0.1.1",
   }
 }
