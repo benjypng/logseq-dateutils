@@ -12,26 +12,27 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-  permissions:
-    contents: write # to be able to publish a GitHub release
-    issues: write # to be able to comment on released issues
-    pull-requests: write # to be able to comment on released pull requests
-    id-token: write # to enable use of OIDC for npm provenance
 
-  steps:
-    - uses: actions/checkout@v3
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
 
-    - name: Use Node.js
-      uses: actions/setup-node@v3
-      with:
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
           node-version: "20.x" # You might need to adjust this value to your own version
 
-    - uses: pnpm/action-setup@v2
-      with:
-        version: 6.0.2
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 6.0.2
 
-    - name: Release
-      run: npx semantic-release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
