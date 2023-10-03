@@ -86,11 +86,11 @@
     "husky": "^8.0.3",
     "size-limit": "^9.0.0",
     "tslib": "^2.6.2",
-    "typescript": "^5.2.2"
-  },
-  "dependencies": {
-    "date-fns": "^2.30.0",
+    "typescript": "^5.2.2",
     "dts": "^0.1.1",
     "dts-cli": "^2.0.3"
+  },
+  "dependencies": {
+    "date-fns": "^2.30.0"
   }
 }
