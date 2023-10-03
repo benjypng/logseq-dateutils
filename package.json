@@ -14,7 +14,7 @@
   "license": "MIT",
   "author": "hkgnp",
   "main": "dist/index.js",
-  "module": "dist/my-lib.esm.js",
+  "module": "dist/logseq-dateutils.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist",
