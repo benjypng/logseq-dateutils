@@ -1,103 +1,73 @@
-# DTS User Guide
+[:gift_heart: Sponsor this project on Github](https://github.com/sponsors/hkgnp) or [:coffee: Get me a coffee](https://www.buymeacoffee.com/hkgnp.dev) if you like this plugin!
 
-Congrats! You just saved yourself hours of work by bootstrapping this project with DTS. Let’s get you oriented with what’s here and how to use it.
+# Overview
 
-> This DTS setup is meant for developing libraries (not apps!) that can be published to NPM. If you’re looking to build a Node app, you could use `ts-node-dev`, plain `ts-node`, or simple `tsc`.
+Provides some date utilities for developing Logseq plugins, in particular to cater to handling multiple user-defined date formats.
 
-> If you’re new to TypeScript, checkout [this handy cheatsheet](https://devhints.io/typescript)
+# Installation
 
-## Commands
+With npm:
 
-DTS scaffolds your new library inside `/src`.
-
-To run DTS, use:
-
-```bash
-npm start # or yarn start
+```
+npm i logseq-dateutils
 ```
 
-This builds to `/dist` and runs the project in watch mode so any edits you save inside `src` causes a rebuild to `/dist`.
+Import (you may also import only selective functions for your needs):
 
-To do a one-off build, use `npm run build` or `yarn build`.
-
-To run tests, use `npm test` or `yarn test`.
-
-## Configuration
-
-Code quality is set up for you with `prettier`, `husky`, and `lint-staged`. Adjust the respective fields in `package.json` accordingly.
-
-### Jest
-
-Jest tests are set up to run with `npm test` or `yarn test`.
-
-### Bundle Analysis
-
-[`size-limit`](https://github.com/ai/size-limit) is set up to calculate the real cost of your library with `npm run size` and visualize the bundle with `npm run analyze`.
-
-#### Setup Files
-
-This is the folder structure we set up for you:
-
-```txt
-/src
-  index.ts        # EDIT THIS
-/test
-  index.test.ts   # EDIT THIS
-.gitignore
-package.json
-README.md         # EDIT THIS
-tsconfig.json
+```
+import { getDateForPage, getDateForPageWithoutBrackets, getDayInText, getScheduledDeadlineDateDay, getScheduledDeadlineDateDayTime } from 'logseq-dateutils';
 ```
 
-### Rollup
+# Usage
 
-DTS uses [Rollup](https://rollupjs.org) as a bundler and generates multiple rollup configs for various module formats and build settings. See [Optimizations](#optimizations) for details.
+Below is an elaboration of the methods available:
 
-### TypeScript
+## getDateForPage or getDateForPageWithoutBrackets
 
-`tsconfig.json` is set up to interpret `dom` and `esnext` types, as well as `react` for `jsx`. Adjust according to your needs.
+Returns the specified date based on the user's preferred date format. Accepts 2 arguments. `getDateForPage` returns the date with brackets (`[[date]]`) while `getDateForPageWithoutBrackets` returns the date without the brackets.
 
-## Continuous Integration
+```
+import { getDateForPage, getDateForPageWithoutBrackets, getDayInText, getScheduledDeadlineDate } from 'logseq-dateutils';
 
-### GitHub Actions
+const preferredDateFormat = 'yyyy/MM/dd';
+const today = new Date();
 
-Two actions are added by default:
-
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
-
-## Optimizations
-
-Please see the main `dts` [optimizations docs](https://github.com/weiran-zsd/dts-cli#optimizations). In particular, know that you can take advantage of development-only optimizations:
-
-```js
-// ./types/index.d.ts
-declare var __DEV__: boolean;
-
-// inside your code...
-if (__DEV__) {
-  console.log('foo');
-}
+const todayDateInUserFormat = getDateForPage(today, preferredDateFormat);
+console.log(todayDateInUserFormat);
 ```
 
-You can also choose to install and use [invariant](https://github.com/weiran-zsd/dts-cli#invariant) and [warning](https://github.com/weiran-zsd/dts-cli#warning) functions.
+## getDayInText
 
-## Module Formats
+Returns the day, based on the specified date.
 
-CJS, ESModules, and UMD module formats are supported.
+```
+const today = new Date();
 
-The appropriate paths are configured in `package.json` and `dist/index.js` accordingly. Please report if any issues are found.
+const todayDay = getDayInText(today);
+```
 
-## Named Exports
+## getScheduledDeadlineDateDay
 
-Per Palmer Group guidelines, [always use named exports.](https://github.com/palmerhq/typescript#exports) Code split inside your React app instead of your React library.
+Returns the date format that is needed (without the time) if your plugin requires creation of `SCHEDULED` or `DEADLINE` items.
 
-## Including Styles
+```
+const today = new Date();
 
-There are many ways to ship styles, including with CSS-in-JS. DTS has no opinion on this, configure how you like.
+await logseq.Editor.updateBlock(uuid, `A quick brown fox
+SCHEDULED: <getScheduledDeadlineFormat(today)>`)
+```
 
-For vanilla CSS, you can include it at the root directory and add it to the `files` section in your `package.json`, so that it can be imported separately by your users and run through their bundler's loader.
+## getScheduledDeadlineDateDayTime
 
-## Publishing to NPM
+Returns the date format that is needed (including the time) if your plugin requires creation of `SCHEDULED` or `DEADLINE` items.
 
-We recommend using [np](https://github.com/sindresorhus/np).
+```
+const today = new Date();
+
+await logseq.Editor.updateBlock(uuid, `A quick brown fox
+DEADLINE: <getScheduledDeadlineDateDayTime(today)>`)
+```
+
+# Getting Help
+
+Do join [Logseq's Discord](https://discord.gg/KpN4eHY) and look for me there!
