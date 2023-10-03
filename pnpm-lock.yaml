@@ -22,6 +22,9 @@ devDependencies:
   '@types/node':
     specifier: ^20.8.2
     version: 20.8.2
+  dts:
+    specifier: ^0.1.1
+    version: 0.1.1
   dts-cli:
     specifier: ^2.0.3
     version: 2.0.3(@babel/plugin-syntax-flow@7.22.5)(@babel/plugin-transform-react-jsx@7.22.15)(@types/node@20.8.2)
@@ -3279,6 +3282,10 @@ packages:
       - node-notifier
       - supports-color
       - utf-8-validate
+    dev: true
+
+  /dts@0.1.1:
+    resolution: {integrity: sha512-A8yu9cMgPtCg2xlxwYvukVCjKGUNKzkHUNSMDmTNz4ixlpyIMQ72Uz28W5Au+2i87NokUFFTXYTiHCb+RdAnVw==}
     dev: true
 
   /electron-to-chromium@1.4.539:
