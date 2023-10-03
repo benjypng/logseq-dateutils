@@ -1,26 +1,63 @@
 {
-  "name": "logseq-dateutils",
-  "version": "0.0.26",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/hkgnp/logseq-dateutils.git"
+  "name": "my-lib",
+  "version": "0.1.0",
+  "license": "MIT",
+  "author": "hkgnp",
+  "main": "dist/index.js",
+  "module": "dist/my-lib.esm.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "analyze": "size-limit --why",
+    "build": "dts build",
+    "lint": "dts lint",
+    "prepare": "dts build",
+    "size": "size-limit",
+    "start": "dts watch",
+    "test": "dts test"
   },
-  "keywords": [
-    "logseq",
-    "scheduled",
-    "deadline",
-    "date",
-    "utilities"
+  "husky": {
+    "hooks": {
+      "pre-commit": "dts lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "size-limit": [
+    {
+      "path": "dist/my-lib.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/my-lib.esm.js",
+      "limit": "10 KB"
+    }
   ],
   "devDependencies": {
-    "microbundle": "^0.15.1"
+    "@size-limit/preset-small-lib": "^9.0.0",
+    "@tsconfig/recommended": "^1.0.3",
+    "@types/jest": "^29.5.5",
+    "@types/node": "^20.8.2",
+    "dts-cli": "^2.0.3",
+    "husky": "^8.0.3",
+    "size-limit": "^9.0.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.2.2"
   },
-  "scripts": {
-    "dev": "microbundle watch",
-    "build": "rm -R dist && microbundle"
-  },
-  "source": "src/index.ts",
-  "main": "dist/index.umd.js",
-  "module": "dist/index.modern.module.js",
-  "types": "dist/index.d.ts"
+  "dependencies": {
+    "date-fns": "^2.30.0"
+  }
 }
