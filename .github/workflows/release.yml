@@ -31,6 +31,12 @@ jobs:
         with:
           version: 6.0.2
 
+      - name: Build
+        id: build
+        run: |
+          pnpm i && pnpm run build
+          echo "tag_name=git tag --sort version:refname | tail -n 1" >> $GITHUB_OUTPUT
+
       - name: Release
         run: npx semantic-release
         env:
