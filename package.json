@@ -1,6 +1,17 @@
 {
-  "name": "my-lib",
-  "version": "0.1.0",
+  "name": "logseq-dateutils",
+  "version": "0.0.26",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hkgnp/logseq-dateutils.git"
+  },
+  "keywords": [
+    "logseq",
+    "scheduled",
+    "deadline",
+    "date",
+    "utilities"
+  ],
   "license": "MIT",
   "author": "hkgnp",
   "main": "dist/index.js",
