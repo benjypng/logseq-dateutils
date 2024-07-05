@@ -4,6 +4,15 @@
     "type": "git",
     "url": "https://github.com/hkgnp/logseq-dateutils.git"
   },
+  "scripts": {
+    "analyze": "size-limit --why",
+    "build": "dts build",
+    "lint": "dts lint",
+    "prepare": "dts build",
+    "size": "size-limit",
+    "start": "dts watch",
+    "test": "dts test"
+  },
   "keywords": [
     "logseq",
     "scheduled",
@@ -42,15 +51,6 @@
       ]
     ]
   },
-  "scripts": {
-    "analyze": "size-limit --why",
-    "build": "dts build",
-    "lint": "dts lint",
-    "prepare": "dts build",
-    "size": "size-limit",
-    "start": "dts watch",
-    "test": "dts test"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "dts lint"
@@ -80,15 +80,15 @@
   ],
   "devDependencies": {
     "@size-limit/preset-small-lib": "^9.0.0",
-    "@tsconfig/recommended": "^1.0.3",
-    "@types/jest": "^29.5.5",
-    "@types/node": "^20.8.2",
+    "@tsconfig/recommended": "^1.0.7",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.14.9",
+    "dts": "^0.1.1",
+    "dts-cli": "^2.0.5",
     "husky": "^8.0.3",
     "size-limit": "^9.0.0",
-    "tslib": "^2.6.2",
-    "typescript": "^5.2.2",
-    "dts": "^0.1.1",
-    "dts-cli": "^2.0.3"
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.3"
   },
   "dependencies": {
     "date-fns": "^2.30.0"
