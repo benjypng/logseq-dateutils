@@ -1,20 +1,15 @@
 {
   "extends": "@tsconfig/recommended/tsconfig.json",
-  "include": ["src", "types"],
+  "include": ["src", "test"],
   "exclude": ["node_modules", "./dist/**/*"],
   "compilerOptions": {
     "lib": ["dom", "dom.iterable", "esnext"],
     "esModuleInterop": true,
     "module": "esnext",
-    "moduleResolution": "node",
-    "allowJs": true,
-    "declaration": true,
-    "outDir": "dist",
-    "declarationMap": true,
+    "moduleResolution": "bundler",
+    "noEmit": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "incremental": true,
-    "noUncheckedIndexedAccess": true,
-    "baseUrl": "./"
+    "noUncheckedIndexedAccess": true
   }
 }

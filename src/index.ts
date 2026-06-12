@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import format from 'date-fns/format/index.js';
 
 export const getDateForPage = (d: Date, preferredDateFormat: string) => {
   return `[[${format(d, preferredDateFormat)}]]`;

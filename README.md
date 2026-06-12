@@ -9,13 +9,20 @@ Provides some date utilities for developing Logseq plugins, in particular to cat
 With npm:
 
 ```
-npm i logseq-dateutils
+npm i @benjypng/logseq-dateutils
 ```
 
 Import (you may also import only selective functions for your needs):
 
-```
-import { getDateForPage, getDateForPageWithoutBrackets, getDayInText, getScheduledDeadlineDateDay, getScheduledDeadlineDateDayTime } from 'logseq-dateutils';
+```js
+import {
+  getDateForPage,
+  getDateForPageWithoutBrackets,
+  getDeadlineDateDay,
+  getScheduledDateDay,
+  getYYMMDDTHHMMFormat,
+  getYYMMDD,
+} from '@benjypng/logseq-dateutils';
 ```
 
 # Usage
@@ -24,48 +31,69 @@ Below is an elaboration of the methods available:
 
 ## getDateForPage or getDateForPageWithoutBrackets
 
-Returns the specified date based on the user's preferred date format. Accepts 2 arguments. `getDateForPage` returns the date with brackets (`[[date]]`) while `getDateForPageWithoutBrackets` returns the date without the brackets.
+Returns the specified date based on the user's preferred date format. Accepts 2 arguments: a `Date` and the user's preferred date format (e.g. from `logseq.App.getUserConfigs()`). `getDateForPage` returns the date with brackets (`[[date]]`) while `getDateForPageWithoutBrackets` returns the date without the brackets.
 
-```
-import { getDateForPage, getDateForPageWithoutBrackets, getDayInText, getScheduledDeadlineDate } from 'logseq-dateutils';
+```js
+import { getDateForPage, getDateForPageWithoutBrackets } from '@benjypng/logseq-dateutils';
 
-const preferredDateFormat = 'yyyy/MM/dd';
+const preferredDateFormat = 'MMM do, yyyy';
 const today = new Date();
 
-const todayDateInUserFormat = getDateForPage(today, preferredDateFormat);
-console.log(todayDateInUserFormat);
+getDateForPage(today, preferredDateFormat);
+// e.g. '[[Oct 3rd, 2023]]'
+
+getDateForPageWithoutBrackets(today, preferredDateFormat);
+// e.g. 'Oct 3rd, 2023'
 ```
 
-## getDayInText
+## getScheduledDateDay
 
-Returns the day, based on the specified date.
+Returns a complete `SCHEDULED:` line for the specified date, ready to insert into a block. The time is included only if it is not midnight.
 
-```
+```js
 const today = new Date();
 
-const todayDay = getDayInText(today);
+await logseq.Editor.updateBlock(
+  uuid,
+  `A quick brown fox
+${getScheduledDateDay(today)}`
+);
+// Appends e.g. 'SCHEDULED: <2023-10-03 Tue>'
+// or 'SCHEDULED: <2023-10-03 Tue 12:35>' if a time is set
 ```
 
-## getScheduledDeadlineDateDay
+## getDeadlineDateDay
 
-Returns the date format that is needed (without the time) if your plugin requires creation of `SCHEDULED` or `DEADLINE` items.
+Same as `getScheduledDateDay`, but returns a `DEADLINE:` line instead.
 
-```
+```js
 const today = new Date();
 
-await logseq.Editor.updateBlock(uuid, `A quick brown fox
-SCHEDULED: <getScheduledDeadlineFormat(today)>`)
+await logseq.Editor.updateBlock(
+  uuid,
+  `A quick brown fox
+${getDeadlineDateDay(today)}`
+);
+// Appends e.g. 'DEADLINE: <2023-10-03 Tue>'
+// or 'DEADLINE: <2023-10-03 Tue 12:35>' if a time is set
 ```
 
-## getScheduledDeadlineDateDayTime
+## getYYMMDDTHHMMFormat
 
-Returns the date format that is needed (including the time) if your plugin requires creation of `SCHEDULED` or `DEADLINE` items.
+Returns the specified date and time in `yyMMdd'T'HHmm` format.
 
+```js
+getYYMMDDTHHMMFormat(new Date('2023-10-03T12:35:00'));
+// '231003T1235'
 ```
-const today = new Date();
 
-await logseq.Editor.updateBlock(uuid, `A quick brown fox
-DEADLINE: <getScheduledDeadlineDateDayTime(today)>`)
+## getYYMMDD
+
+Returns the specified date in `yyMMdd` format.
+
+```js
+getYYMMDD(new Date('2023-10-03T12:35:00'));
+// '231003'
 ```
 
 # Getting Help

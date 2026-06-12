@@ -1,44 +1,49 @@
-name: Build npm package
+name: Release
 
 on:
   push:
-    branches:
-      - "main"
-  workflow_dispatch:
+    branches: [main]
 
-env:
-  PLUGIN_NAME: ${{ github.event.repository.name }}
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write # npm trusted publishing (OIDC)
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
 
-    permissions:
-      contents: write # to be able to publish a GitHub release
-      issues: write # to be able to comment on released issues
-      pull-requests: write # to be able to comment on released pull requests
-      id-token: write # to enable use of OIDC for npm provenance
-
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Use Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
         with:
-          node-version: "20.x" # You might need to adjust this value to your own version
+          fetch-depth: 0 # semantic-release needs full tag history
 
-      - uses: pnpm/action-setup@v4
+      # No registry-url on setup-node: the .npmrc it writes conflicts with
+      # semantic-release's npm auth.
+      - uses: actions/setup-node@v4
         with:
-          version: 9.1.1
+          node-version: 24
+
+      - run: npm install -g npm@latest # trusted publishing needs npm >= 11.5.1
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install
+        run: bun install
+
+      - name: Typecheck
+        run: bun run typecheck
+
+      - name: Test
+        run: bun run test
 
       - name: Build
-        id: build
-        run: |
-          pnpm i && pnpm run build
-          echo "tag_name=git tag --sort version:refname | tail -n 1" >> $GITHUB_OUTPUT
+        run: bun run build
 
       - name: Release
         run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # Deliberately no NPM_TOKEN: @semantic-release/npm attempts OIDC
+          # automatically when it's absent.
