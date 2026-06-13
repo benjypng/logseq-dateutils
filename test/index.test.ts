@@ -8,70 +8,152 @@ import {
   getYYMMDDTHHMMFormat,
 } from '../src/index';
 
-describe('Get date for page in brackets', () => {
-  it('gets the date for a page in brackets', () => {
-    expect(getDateForPage(new Date('Tue Oct 03 2023'), 'MMM do, yyyy')).toEqual(
+describe('getDateForPage', () => {
+  it('wraps the formatted date in [[brackets]]', () => {
+    expect(getDateForPage(new Date(2023, 9, 3), 'MMM do, yyyy')).toEqual(
       '[[Oct 3rd, 2023]]'
     );
   });
+
+  it('honours the supplied date format', () => {
+    expect(getDateForPage(new Date(2023, 9, 3), 'yyyy/MM/dd')).toEqual(
+      '[[2023/10/03]]'
+    );
+  });
 });
 
-describe('Get date for page without brackets', () => {
-  it('gets the date for a page without brackets', () => {
+describe('getDateForPageWithoutBrackets', () => {
+  it('formats the date with no brackets', () => {
     expect(
-      getDateForPageWithoutBrackets(new Date('Tue Oct 03 2023'), 'MMM do, yyyy')
+      getDateForPageWithoutBrackets(new Date(2023, 9, 3), 'MMM do, yyyy')
     ).toEqual('Oct 3rd, 2023');
   });
+
+  it('honours the supplied date format', () => {
+    expect(
+      getDateForPageWithoutBrackets(new Date(2023, 9, 3), 'yyyy/MM/dd')
+    ).toEqual('2023/10/03');
+  });
 });
 
-describe('Get DEADLINE component', () => {
-  it('gets deadline-compatible component', () => {
-    expect(
-      getDeadlineDateDay(
-        new Date(`Tue Oct 03 2023 12:35:47 GMT+0800 (Singapore Standard Time)`)
-      )
-    ).toEqual('DEADLINE: <2023-10-03 Tue 12:35>');
+describe('getDeadlineDateDay', () => {
+  it('includes the time when it is not midnight', () => {
+    expect(getDeadlineDateDay(new Date(2023, 9, 3, 12, 35))).toEqual(
+      'DEADLINE: <2023-10-03 Tue 12:35>'
+    );
   });
 
-  it('gets deadline-compatible component without time', () => {
-    expect(getDeadlineDateDay(new Date(`Tue Oct 03 2023`))).toEqual(
+  it('omits the time at exactly midnight', () => {
+    expect(getDeadlineDateDay(new Date(2023, 9, 3, 0, 0))).toEqual(
       'DEADLINE: <2023-10-03 Tue>'
     );
   });
-});
 
-describe('Get SCHEDULED component', () => {
-  it('gets scheduled-compatible component', () => {
-    expect(
-      getScheduledDateDay(
-        new Date(`Tue Oct 03 2023 12:35:47 GMT+0800 (Singapore Standard Time)`)
-      )
-    ).toEqual('SCHEDULED: <2023-10-03 Tue 12:35>');
+  it('omits the time for a date-only value', () => {
+    expect(getDeadlineDateDay(new Date(2023, 9, 3))).toEqual(
+      'DEADLINE: <2023-10-03 Tue>'
+    );
   });
 
-  it('gets scheduled-compatible component without time', () => {
-    expect(getScheduledDateDay(new Date(`Tue Oct 03 2023`))).toEqual(
-      'SCHEDULED: <2023-10-03 Tue>'
+  it('keeps the time one minute past midnight', () => {
+    expect(getDeadlineDateDay(new Date(2023, 9, 3, 0, 1))).toEqual(
+      'DEADLINE: <2023-10-03 Tue 00:01>'
     );
   });
 });
 
-describe('Get YYMMDDTHHMM', () => {
-  it('Get the date in YYMMDDTHHMM', () => {
-    expect(
-      getYYMMDDTHHMMFormat(
-        new Date(`Tue Oct 03 2023 12:35:47 GMT+0800 (Singapore Standard Time)`)
-      )
-    ).toEqual('231003T1235');
+describe('getScheduledDateDay', () => {
+  it('includes the time when it is not midnight', () => {
+    expect(getScheduledDateDay(new Date(2023, 9, 3, 12, 35))).toEqual(
+      'SCHEDULED: <2023-10-03 Tue 12:35>'
+    );
+  });
+
+  it('omits the time at exactly midnight', () => {
+    expect(getScheduledDateDay(new Date(2023, 9, 3, 0, 0))).toEqual(
+      'SCHEDULED: <2023-10-03 Tue>'
+    );
+  });
+
+  it('omits the time for a date-only value', () => {
+    expect(getScheduledDateDay(new Date(2023, 9, 3))).toEqual(
+      'SCHEDULED: <2023-10-03 Tue>'
+    );
+  });
+
+  it('keeps the time one minute past midnight', () => {
+    expect(getScheduledDateDay(new Date(2023, 9, 3, 0, 1))).toEqual(
+      'SCHEDULED: <2023-10-03 Tue 00:01>'
+    );
   });
 });
 
-describe('Get YYMMDD', () => {
-  it('Get the date in YYMMDD', () => {
-    expect(
-      getYYMMDD(
-        new Date(`Tue Oct 03 2023 12:35:47 GMT+0800 (Singapore Standard Time)`)
-      )
-    ).toEqual('231003');
+describe('getYYMMDDTHHMMFormat', () => {
+  it('formats date and time as yyMMddTHHmm', () => {
+    expect(getYYMMDDTHHMMFormat(new Date(2023, 9, 3, 12, 35))).toEqual(
+      '231003T1235'
+    );
   });
+
+  it('zero-pads the time at midnight', () => {
+    expect(getYYMMDDTHHMMFormat(new Date(2023, 9, 3, 0, 0))).toEqual(
+      '231003T0000'
+    );
+  });
+});
+
+describe('getYYMMDD', () => {
+  it('formats the date as yyMMdd', () => {
+    expect(getYYMMDD(new Date(2023, 9, 3, 12, 35))).toEqual('231003');
+  });
+});
+
+describe('invalid dates', () => {
+  const invalid = new Date('not a date');
+
+  it.each([
+    ['getDateForPage', () => getDateForPage(invalid, 'yyyy-MM-dd')],
+    [
+      'getDateForPageWithoutBrackets',
+      () => getDateForPageWithoutBrackets(invalid, 'yyyy-MM-dd'),
+    ],
+    ['getDeadlineDateDay', () => getDeadlineDateDay(invalid)],
+    ['getScheduledDateDay', () => getScheduledDateDay(invalid)],
+    ['getYYMMDDTHHMMFormat', () => getYYMMDDTHHMMFormat(invalid)],
+    ['getYYMMDD', () => getYYMMDD(invalid)],
+  ])('%s throws a RangeError', (_name, call) => {
+    expect(call).toThrow(RangeError);
+    expect(call).toThrow('an invalid Date was provided');
+  });
+});
+
+describe('invalid date format strings', () => {
+  const valid = new Date(2023, 9, 3);
+
+  it.each([
+    ['empty string', ''],
+    ['whitespace only', '   '],
+    ['null', null as unknown as string],
+    ['undefined', undefined as unknown as string],
+    ['a number', 123 as unknown as string],
+  ])('getDateForPage throws a RangeError for %s', (_name, fmt) => {
+    const call = () => getDateForPage(valid, fmt);
+    expect(call).toThrow(RangeError);
+    expect(call).toThrow('a date format string is required');
+  });
+
+  it.each([
+    ['empty string', ''],
+    ['whitespace only', '   '],
+    ['null', null as unknown as string],
+    ['undefined', undefined as unknown as string],
+    ['a number', 123 as unknown as string],
+  ])(
+    'getDateForPageWithoutBrackets throws a RangeError for %s',
+    (_name, fmt) => {
+      const call = () => getDateForPageWithoutBrackets(valid, fmt);
+      expect(call).toThrow(RangeError);
+      expect(call).toThrow('a date format string is required');
+    }
+  );
 });

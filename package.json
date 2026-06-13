@@ -15,7 +15,7 @@
     "prepare": "tsdown src/index.ts --format esm,cjs --dts --clean",
     "size": "size-limit",
     "start": "tsdown src/index.ts --format esm,cjs --dts --watch",
-    "test": "TZ=Asia/Singapore bun test",
+    "test": "bun test",
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
