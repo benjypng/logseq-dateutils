@@ -1,12 +1,20 @@
-[:gift_heart: Sponsor this project on Github](https://github.com/sponsors/hkgnp) or [:coffee: Get me a coffee](https://www.buymeacoffee.com/hkgnp.dev) if you like this plugin!
+# @benjypng/logseq-dateutils
 
-# Overview
+![Version](https://img.shields.io/npm/v/%40benjypng%2Flogseq-dateutils?style=flat-square&color=0969da) ![Downloads](https://img.shields.io/npm/dm/%40benjypng%2Flogseq-dateutils?style=flat-square&color=orange) ![License](https://img.shields.io/github/license/benjypng/logseq-dateutils?style=flat-square)
 
-Provides some date utilities for developing Logseq plugins, in particular to cater to handling multiple user-defined date formats.
+> Date utilities for developing Logseq plugins — format dates in the user's preferred date format and generate ready-to-insert `SCHEDULED:` / `DEADLINE:` lines.
 
-# Installation
+---
 
-With npm:
+## ✨ Features
+
+- **User-format aware:** Format any date according to the user's `preferredDateFormat` (e.g. from `logseq.App.getUserConfigs()`), with or without `[[page brackets]]`.
+- **Ready-made org-style lines:** Generate complete `SCHEDULED: <...>` and `DEADLINE: <...>` strings, with the time included automatically when it isn't midnight.
+- **Compact timestamps:** `yyMMdd` and `yyMMdd'T'HHmm` helpers for IDs and filenames.
+- **Dual ESM + CJS** with full TypeScript declarations for both formats.
+- **Tiny:** under 9 kB minified + gzipped including its only dependency, `date-fns`.
+
+## ⚙️ Installation
 
 ```
 npm i @benjypng/logseq-dateutils
@@ -25,11 +33,9 @@ import {
 } from '@benjypng/logseq-dateutils';
 ```
 
-# Usage
+## 🛠 Usage
 
-Below is an elaboration of the methods available:
-
-## getDateForPage or getDateForPageWithoutBrackets
+### getDateForPage or getDateForPageWithoutBrackets
 
 Returns the specified date based on the user's preferred date format. Accepts 2 arguments: a `Date` and the user's preferred date format (e.g. from `logseq.App.getUserConfigs()`). `getDateForPage` returns the date with brackets (`[[date]]`) while `getDateForPageWithoutBrackets` returns the date without the brackets.
 
@@ -46,7 +52,7 @@ getDateForPageWithoutBrackets(today, preferredDateFormat);
 // e.g. 'Oct 3rd, 2023'
 ```
 
-## getScheduledDateDay
+### getScheduledDateDay
 
 Returns a complete `SCHEDULED:` line for the specified date, ready to insert into a block. The time is included only if it is not midnight.
 
@@ -62,7 +68,7 @@ ${getScheduledDateDay(today)}`
 // or 'SCHEDULED: <2023-10-03 Tue 12:35>' if a time is set
 ```
 
-## getDeadlineDateDay
+### getDeadlineDateDay
 
 Same as `getScheduledDateDay`, but returns a `DEADLINE:` line instead.
 
@@ -78,7 +84,7 @@ ${getDeadlineDateDay(today)}`
 // or 'DEADLINE: <2023-10-03 Tue 12:35>' if a time is set
 ```
 
-## getYYMMDDTHHMMFormat
+### getYYMMDDTHHMMFormat
 
 Returns the specified date and time in `yyMMdd'T'HHmm` format.
 
@@ -87,7 +93,7 @@ getYYMMDDTHHMMFormat(new Date('2023-10-03T12:35:00'));
 // '231003T1235'
 ```
 
-## getYYMMDD
+### getYYMMDD
 
 Returns the specified date in `yyMMdd` format.
 
@@ -96,6 +102,14 @@ getYYMMDD(new Date('2023-10-03T12:35:00'));
 // '231003'
 ```
 
-# Getting Help
+## ☕️ Support
 
-Do join [Logseq's Discord](https://discord.gg/KpN4eHY) and look for me there!
+If you find this library useful, please consider supporting the development.
+
+<div align="center">
+  <a href="https://github.com/sponsors/benjypng"><img src="https://img.shields.io/badge/Sponsor-GitHub-ea4aaa?style=for-the-badge&logo=github" alt="Sponsor on Github" /></a>&nbsp;<a href="https://buymeacoffee.com/hkgnp.dev"><img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" alt="Buy Me a Coffee" /></a>
+</div>
+
+## 🤝 Contributing
+
+Issues are welcome. If you find a bug, please open an issue — or join [Logseq's Discord](https://discord.gg/KpN4eHY) and look for me there. Pull requests are not accepted at the moment as I am not able to commit to reviewing them in a timely fashion.
